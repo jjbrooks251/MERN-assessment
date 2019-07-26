@@ -20,7 +20,7 @@ The given assessment has been broken down into the following stages:
   
   The following stages are **not completed** due the following reasons: 
   
-  2) Validating password upon Login
+  1) Validating password upon Login
       - Comparing hashed password to an entered one was unsuccessful
       - Validation is used for username and email to still ensure two-step verification   
   6) Creating an account with a unique username and password
