@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const isEmpty = require("./is-empty.js")
+const isEmpty = require("./isempty.js")
 
 module.exports = function hashData(data) {
 
