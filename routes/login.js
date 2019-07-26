@@ -14,10 +14,7 @@ router.post("/signIn", (req, res) => {
     const errors = {};
     user.find({ username: req.body.username }, '-__v -_id -password')
         .then(users => {
-            if (!users) {
-                errors.noUsers = "No users at all";
-                res.status(404).json(errors);
-            } else if (users[0].username === req.body.username
+            if (users[0].username === req.body.username
                 && users[0].email === req.body.email) {
                 console.log(users[0].username + " " + req.body.username)
                 res.send("Login Successful");
