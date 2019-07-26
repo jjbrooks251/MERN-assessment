@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const user = require("../models/userModel.js");
 const validUser = require("../validation/userValid.js");
+//const passHash = require("../validation/hash.js");
 
 router.get("/test", (req, res) => {
     res.json({ message: "user test" });
@@ -33,10 +34,15 @@ router.post('/addUser', (req, res) => {
             username: req.body.username,
             email: req.body.email,
             password: req.body.password
+            //password: passHash(req.body.password)
         });
-        newUser.save()
-            .then(() => res.send('User added'))
-            .catch(() => res.status(404).json(errors));
+        bcrypt.hash(req.body.password, 15)
+            .then((hash) => {
+                newUser.password = hash
+                newUser.save()
+                res.status(200).send("Added New Item")
+            })
+            .catch(err => res.status(555).json({ "Fault": `${err}` }))
     } else {
         res.send(valid);
     }
