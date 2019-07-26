@@ -9,6 +9,7 @@ const login = require("./routes/login.js");
 
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
+
 app.use("/users", users);
 app.use("/login", login);
 

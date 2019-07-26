@@ -34,9 +34,13 @@ router.post('/addUser', (req, res) => {
             email: req.body.email,
             password: req.body.password
         });
-        newUser.save()
-            .then(() => res.send('User added'))
-            .catch(() => res.status(404).json(errors));
+        bcrypt.hash(req.body.password, 15)
+            .then((hash) => {
+                newUser.password = hash
+                newUser.save()
+                res.status(200).send("Added New Item")
+            })
+            .catch(err => res.status(555).json({ "Fault": `${err}` }))
     } else {
         res.send(valid);
     }
