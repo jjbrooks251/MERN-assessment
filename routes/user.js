@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const user = require("../models/userModel.js");
 const validUser = require("../validation/userValid.js");
+//const passHash = require("../validation/hash.js");
 
 router.get("/test", (req, res) => {
     res.json({ message: "user test" });
@@ -33,6 +34,7 @@ router.post('/addUser', (req, res) => {
             username: req.body.username,
             email: req.body.email,
             password: req.body.password
+            //password: passHash(req.body.password)
         });
         bcrypt.hash(req.body.password, 15)
             .then((hash) => {
