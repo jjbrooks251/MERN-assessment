@@ -51,44 +51,42 @@ router.post('/addUser', (req, res) => {
     }
 });
 
-// router.post('/addUniqueUser', (req, res) => {
-//     const errors = {};
+router.post('/addUniqueUser', (req, res) => {
+    const errors = {};
 
-//     user.find({ username: req.body.username }, '-__v -_id -password')
-//         .then(users => {
-//             if (users[0].username === req.body.username) {
-//                 console.log(users[0].username + " " + req.body.username)
-//                 res.json({ Message: "Account with this Username already exists" });
-//             }
-//             if (users[0].email === req.body.email) {
-//                 console.log(users[0].email + " " + req.body.email)
-//                 res.json({ Message: "Account with this Email already exists" });
-//             }
-//         })
-//         .catch(() => {
-//             if (req.body.password === req.body.passconf) {
-//                 if (valid.isValid) {
-//                     const newUser = new user({
-//                         username: req.body.username,
-//                         email: req.body.email,
-//                         password: req.body.password
-//                         //password: passHash(req.body.password)
-//                     });
-//                     bcrypt.hash(req.body.password, 15)
-//                         .then((hash) => {
-//                             newUser.password = hash
-//                             newUser.save()
-//                             res.status(200).send("Added New Item")
-//                         })
-//                         .catch(err => res.status(555).json({ "Fault": `${err}` }))
-//                 } else {
-//                     res.send(valid);
-//                 }
-//             } else {
-//                 res.json({ Message: "Passwords do not match" });
-//             }
-//         });
-// });
+    user.find({ username: req.body.username }, '-__v -_id -password')
+        .then(users => {
+            if (!users) {
+                console.log("hi")
+                if (req.body.password === req.body.passconf) {
+                    if (valid.isValid) {
+                        const newUser = new user({
+                            username: req.body.username,
+                            email: req.body.email,
+                            password: req.body.password
+                            //password: passHash(req.body.password)
+                        });
+                        bcrypt.hash(req.body.password, 1)
+                            .then((hash) => {
+                                newUser.password = hash
+                                newUser.save()
+                                res.status(200).send("Added New Item")
+                            })
+                            .catch(err => res.status(555).json({ "Fault": `${err}` }))
+                    } else {
+                        res.send(valid);
+                    }
+                } else {
+                    res.json({ Message: "Passwords do not match" });
+                }
+            } else if (users[0].username === req.body.username) {
+                res.json({ Message: "Account with this Username already exists" });
+            } else if (users[0].email === req.body.email) {
+                res.json({ Message: "Account with this Email already exists" });
+            }
+        })
+    //.catch(err => res.status(404).json({ noUsers: "User cannot be added" }));
+});
 
 router.delete('/remUser', (req, res) => {
     var search = { username: req.body.username };

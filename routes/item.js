@@ -29,22 +29,31 @@ router.get("/getAllItems", (req, res) => {
 });
 
 router.post("/postItem", (req, res) => {
-    const errors = {};
-    let valid = validItem(req.body);
+  const errors = {};
+  let valid = validItem(req.body);
 
-    if(valid.isValid) {
-        const newItem = new item({
+  if (valid.isValid) {
+    user.find({ username: req.body.username }, '-__v -_id -password')
+      .then(users => {
+        if (!users) {
+          errors.noUsers = "There are no Users with this name";
+          res.status(404).json(errors);
+        } else if (users[0].username === req.body.username) {
+          const newItem = new item({
             username: req.body.username,
             password: req.body.password,
             passage: req.body.passage
-        });
+          });
 
-        newItem.save().then(() => res.send('complete'));
+          newItem.save().then(() => res.send('complete'))
+          res.json(items);
+        }
+      })
+      .catch(err => res.status(404).json({ noUsers: "There are no Users with this username" }));
 
-    } else {
-        res.send(valid);
-    }
-
+  } else {
+    res.send(valid);
+  }
 });
 
 module.exports = router;
