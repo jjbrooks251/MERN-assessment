@@ -6,14 +6,14 @@ const app = express();
 
 const users = require("./routes/user.js");
 const login = require("./routes/login.js");
-const message = require("./routes/message.js");
+const item = require("./routes/item.js");
 
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
 app.use("/users", users);
 app.use("/login", login);
-app.use("/message", message);
+app.use("/item", item);
 
 mongoose.connect('mongodb://localhost:27017/example', {useNewUrlParser: true}).then(() => {
     console.log("Connection to host was successful")}, 

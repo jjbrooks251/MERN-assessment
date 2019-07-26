@@ -4,9 +4,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 
 const user = require("../models/userModel.js");
-const message = require("../models/messageModel.js");
+const item = require("../models/itemModel.js");
 const validUser = require("../validation/userValid.js");
-const validMess = require("../validation/messageValid.js");
+const validItem = require("../validation/itemValid.js");
 //const passhash = require("../validation/hash.js");
 
 router.get("/test", (req, res) => {
@@ -15,31 +15,31 @@ router.get("/test", (req, res) => {
   });
 });
 
-router.get("/getAllMessages", (req, res) => {
+router.get("/getAllItems", (req, res) => {
   const errors = {};
-  message.find({}, '-__v -_id -password')
-    .then(messages => {
-      if (!messages) {
-        errors.noMessages = "There are no Messages";
+  item.find({}, '-__v -_id -password')
+    .then(items => {
+      if (!items) {
+        errors.noitems = "There are no Items";
         res.status(404).json(errors);
       }
-      res.json(messages);
+      res.json(items);
     })
-    .catch(err => res.status(404).json({ noMessages: "There are no items" }));
+    .catch(err => res.status(404).json({ noitems: "There are no Items" }));
 });
 
-router.post("/postMessage", (req, res) => {
+router.post("/postItem", (req, res) => {
     const errors = {};
-    let valid = validMess(req.body);
+    let valid = validItem(req.body);
 
     if(valid.isValid) {
-        const newMess = new message({
+        const newItem = new item({
             username: req.body.username,
             password: req.body.password,
             passage: req.body.passage
         });
 
-        newMess.save().then(() => res.send('complete'));
+        newItem.save().then(() => res.send('complete'));
 
     } else {
         res.send(valid);

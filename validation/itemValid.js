@@ -1,7 +1,7 @@
 const Validator = require("validator");
 const isEmpty = require("./isEmpty.js")
 
-module.exports = function validUserCreate(data) {
+module.exports = function validItemCreate(data) {
     let errors = {};
 
     if (!Validator.isAlphanumeric(data.username)) {

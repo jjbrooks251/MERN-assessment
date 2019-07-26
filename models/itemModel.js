@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schemea = mongoose.Schema;
 
-var messageSchema = new Schemea({
+var itemSchema = new Schemea({
     username: {
         type: String,
         required: true,
@@ -20,6 +20,6 @@ var messageSchema = new Schemea({
     }
 });
 
-const message = mongoose.model('Message', messageSchema);
-module.exports = messageSchema;
-module.exports = message;
+const item = mongoose.model('Message', itemSchema);
+module.exports = itemSchema;
+module.exports = item;
