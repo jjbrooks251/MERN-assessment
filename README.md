@@ -22,8 +22,7 @@ The given assessment has been broken down into the following stages:
   
   2) Validating password upon Login
       - Comparing hashed password to an entered one was unsuccessful
-      - Validation is used for username and email to still ensure two-step verification
-      
+      - Validation is used for username and email to still ensure two-step verification   
   6) Creating an account with a unique username and password
       - If a valid account was created the process kept getting caught in an unknown promise and remained unresolved
       - However, if an account was to be made with a pre-existing accounts details the process worked as required
