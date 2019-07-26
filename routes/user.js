@@ -7,7 +7,7 @@ const user = require("../models/userModel.js");
 const validUser = require("../validation/userValid.js");
 
 router.get("/test", (req, res) => {
-    res.json({ message: "test" });
+    res.json({ message: "user test" });
 });
 
 router.get('/getUsers', (req, res) => {
