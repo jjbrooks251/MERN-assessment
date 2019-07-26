@@ -4,10 +4,11 @@ const mongoose = require("mongoose");
 
 const app = express();
 
-
+const users = require("./routes/user.js");
 
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
+app.use("/users", users);
 
 mongoose.connect('mongodb://localhost:27017/example', {useNewUrlParser: true}).then(() => {
     console.log("Connection to host was successful")}, 
